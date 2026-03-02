@@ -102,5 +102,9 @@ To contribute production-quality improvements to PDE discretization tooling in S
 ### Mini Project 1
 Finite Difference implementation of the 1D Heat Equation to understand PDE discretization fundamentals.
 
+### Mini Project 2
+Heat Equation solved using SciML's MethodOfLines.jl discretization pipeline.
+Comparison between manual finite differences and automated discretization.
+
 
 
