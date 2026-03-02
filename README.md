@@ -18,7 +18,7 @@ I am a Computer Engineering student with strong foundations in:
 - Linear Algebra (AA)
 - Calculus and numerical reasoning
 
-While exploring the SciML ecosystem, I encountered and resolved an installation-related issue and successfully contributed a merged pull request to the project. This experience motivated me to deeply understand the numerical and architectural foundations behind SciML's PDE tooling.
+While exploring the SciML ecosystem, I encountered and resolved an installation-related issue and successfully contributed a merged pull request to the project. https://github.com/SciML/SciMLBase.jl/pull/1258 This experience motivated me to deeply understand the numerical and architectural foundations behind SciML's PDE tooling.
 
 This repository serves as a **public learning log** showing my progress toward becoming an effective open-source contributor.
 
