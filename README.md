@@ -55,20 +55,19 @@ The main goals of this repository are:
 - Experiment-driven learning
 
 ---
----
 
 ## 📁 Repository Structure
 
-
+```
 learning-sciML-pde/
 │
-├── notes/ # Concept explanations and summaries
-├── experiments/ # Numerical experiments
-├── mini-projects/ # Small PDE implementations
-├── source-study/ # Internal library exploration
-└── weekly-progress/ # Learning log
+├── notes/            # Concept explanations and summaries
+├── experiments/      # Numerical experiments
+├── mini-projects/    # Small PDE implementations
+├── source-study/     # Internal library exploration
+└── weekly-progress/  # Learning log
+```
 
----
 ---
 
 ## Weekly Progress
