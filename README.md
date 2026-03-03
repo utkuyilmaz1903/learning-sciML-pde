@@ -65,7 +65,7 @@ learning-sciML-pde/
 ├── experiments/      # Numerical experiments
 ├── mini-projects/    # Small PDE implementations
 ├── source-study/     # Internal library exploration
-└── weekly-progress/  # Learning log
+└── progress/  # Learning log
 ```
 
 ---
