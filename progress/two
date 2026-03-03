@@ -1,0 +1,47 @@
+
+## Focus
+Understanding how SciML solves Partial Differential Equations using MethodOfLines.jl.
+
+---
+
+## What I Implemented
+- Solved the 1D Heat Equation using SciML's MethodOfLines.jl.
+- Defined PDE symbolically using ModelingToolkit.
+- Applied automatic finite difference discretization.
+- Generated and solved the resulting ODE system.
+
+---
+
+## Key Concepts Learned
+
+### 1. Symbolic vs Numeric Expressions
+I encountered an error caused by using numeric constants instead of symbolic ones.  
+Learned that ModelingToolkit requires symbolic-compatible expressions for initial conditions.
+
+### 2. Method of Lines Idea
+Observed how SciML:
+- discretizes space automatically,
+- converts a PDE into a system of ODEs,
+- delegates time evolution to DifferentialEquations.jl solvers.
+
+### 3. PDE → ODE Pipeline
+Learned the workflow:
+
+PDE definition → PDESystem → discretize() → ODEProblem → solve()
+
+---
+
+## Challenges
+- Understanding stack traces from MethodOfLines internals.
+- Debugging initial condition parsing issues.
+
+---
+
+## Insights
+Implementing the heat equation manually first made it easier to understand what MethodOfLines automates internally.
+
+---
+
+## Next Goals
+- Study how `discretize()` works internally.
+- Investigate grid generation and derivative operators inside MethodOfLines.
