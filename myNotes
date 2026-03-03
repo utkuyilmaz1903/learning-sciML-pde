@@ -10,16 +10,16 @@ foundation in discretization.
 I wrote a 1D Heat Equation solver using the Explicit Finite Difference Method 
 (FDM) with standard `for` loops in Julia. 
 
-* **The "Aha!" Moment:** The second spatial derivative ($u_{xx}$) is 
+* **The "Aha!" Moment:** The second spatial derivative (u_xx) is 
   physically just a stencil measuring how different a point is from its 
   left and right neighbors: `u[i+1] - 2u[i] + u[i-1]`.
 * **The Explosion:** My first run resulted in a crazy zig-zag graph with 
-  temperatures reaching $10^{214}$. I accidentally discovered **numerical 
+  temperatures reaching 10^214. I accidentally discovered **numerical 
   instability**.
 * **The Fix:** I learned about the Von Neumann stability criterion. My 
-  multiplier ($\alpha \cdot \frac{dt}{dx^2}$) was > 0.5. By shrinking my 
-  time step (`dt` from 0.0005 to 0.0001) and increasing the iterations, the 
-  simulation stabilized into a perfect, smooth cooling curve. 
+  multiplier (α * dt/dx^2) was > 0.5. By shrinking my time step (`dt` 
+  from 0.0005 to 0.0001) and increasing the iterations, the simulation 
+  stabilized into a perfect, smooth cooling curve. 
 
 ## 2. The Transition to SciML
 After feeling the pain of manual array copying and state updates, I rewrote 
@@ -28,8 +28,8 @@ the same PDE using `ModelingToolkit.jl` and `MethodOfLines.jl`.
 * Defining the physics as a symbolic equation (`Dt(u(t,x)) ~ Dxx(u(t,x))`) 
   instead of assignment statements completely shifted my perspective.
 * **Understanding MOL:** I get what `MOLFiniteDifference` actually does 
-  under the hood. It slices the spatial domain ($x$) into discrete chunks 
-  but leaves time ($t$) continuous, effectively converting one giant PDE 
+  under the hood. It slices the spatial domain (x) into discrete chunks 
+  but leaves time (t) continuous, effectively converting one giant PDE 
   into a system of regular ODEs. Then, algorithms like `Tsit5()` handle 
   the time-stepping adaptively, saving me from the manual stability issues 
   I faced earlier.
