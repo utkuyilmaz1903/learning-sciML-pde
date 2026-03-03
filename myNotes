@@ -1,20 +1,47 @@
 # Dissecting the 1D Heat Equation
 
-
-I took a massive step back to understand the actual math and mechanics behind PDE solvers, rather than just treating SciML libraries as magic black boxes. Since my GSoC target is to enhance `MethodOfLines.jl` (specifically adding non-uniform grids), I needed to build a solid foundation in discretization.
+I took a massive step back to understand the actual math and mechanics 
+behind PDE solvers, rather than just treating SciML libraries as magic 
+black boxes. Since my GSoC target is to enhance `MethodOfLines.jl` 
+(specifically adding non-uniform grids), I needed to build a solid 
+foundation in discretization.
 
 ## 1. Building FDM from Scratch (and breaking it!)
-I wrote a 1D Heat Equation solver using the Explicit Finite Difference Method (FDM) with standard `for` loops in Julia. 
-* **The "Aha!" Moment:** The second spatial derivative ($u_{xx}$) is physically just a stencil measuring how different a point is from its left and right neighbors: `u[i+1] - 2u[i] + u[i-1]`.
-* **The Explosion:** My first run resulted in a crazy zig-zag graph with temperatures reaching $10^{214}$. I accidentally discovered **numerical instability**.
-* **The Fix:** I learned about the Von Neumann stability criterion. My multiplier ($\alpha \cdot \frac{dt}{dx^2}$) was > 0.5. By shrinking my time step (`dt` from 0.0005 to 0.0001) and increasing the iterations, the simulation stabilized into a perfect, smooth cooling curve. 
+I wrote a 1D Heat Equation solver using the Explicit Finite Difference Method 
+(FDM) with standard `for` loops in Julia. 
+
+* **The "Aha!" Moment:** The second spatial derivative ($u_{xx}$) is 
+  physically just a stencil measuring how different a point is from its 
+  left and right neighbors: `u[i+1] - 2u[i] + u[i-1]`.
+* **The Explosion:** My first run resulted in a crazy zig-zag graph with 
+  temperatures reaching $10^{214}$. I accidentally discovered **numerical 
+  instability**.
+* **The Fix:** I learned about the Von Neumann stability criterion. My 
+  multiplier ($\alpha \cdot \frac{dt}{dx^2}$) was > 0.5. By shrinking my 
+  time step (`dt` from 0.0005 to 0.0001) and increasing the iterations, the 
+  simulation stabilized into a perfect, smooth cooling curve. 
 
 ## 2. The Transition to SciML
-After feeling the pain of manual array copying and state updates, I rewrote the same PDE using `ModelingToolkit.jl` and `MethodOfLines.jl`.
-* Defining the physics as a symbolic equation (`Dt(u(t,x)) ~ Dxx(u(t,x))`) instead of assignment statements completely shifted my perspective.
-* **Understanding MOL:** I get what `MOLFiniteDifference` actually does under the hood. It slices the spatial domain ($x$) into discrete chunks but leaves time ($t$) continuous, effectively converting one giant PDE into a system of regular ODEs. Then, algorithms like `Tsit5()` handle the time-stepping adaptively, saving me from the manual stability issues I faced earlier.
+After feeling the pain of manual array copying and state updates, I rewrote 
+the same PDE using `ModelingToolkit.jl` and `MethodOfLines.jl`.
+
+* Defining the physics as a symbolic equation (`Dt(u(t,x)) ~ Dxx(u(t,x))`) 
+  instead of assignment statements completely shifted my perspective.
+* **Understanding MOL:** I get what `MOLFiniteDifference` actually does 
+  under the hood. It slices the spatial domain ($x$) into discrete chunks 
+  but leaves time ($t$) continuous, effectively converting one giant PDE 
+  into a system of regular ODEs. Then, algorithms like `Tsit5()` handle 
+  the time-stepping adaptively, saving me from the manual stability issues 
+  I faced earlier.
 
 ## 3. Connecting to my GSoC Goal
-The GSoC project idea mentions enhancing FDM to allow **non-uniform grids**. After manually coding a uniform grid (`dx = 0.02`), the inefficiency is obvious to me now. The boundaries of my rod stay at a constant 0.0 degrees, yet my uniform grid forces the computer to calculate those dead zones with the exact same density as the highly active center. Implementing non-uniform grids will allow us to place dense points where the solution changes rapidly and sparse points elsewhere, saving massive computational power. 
+The GSoC project idea mentions enhancing FDM to allow **non-uniform grids**. 
+After manually coding a uniform grid (`dx = 0.02`), the inefficiency is 
+obvious to me now. The boundaries of my rod stay at a constant 0.0 degrees, 
+yet my uniform grid forces the computer to calculate those dead zones with 
+the exact same density as the highly active center. Implementing non-uniform 
+grids will allow us to place dense points where the solution changes rapidly 
+and sparse points elsewhere, saving massive computational power. 
 
-Next up: Diving deeper into the `MethodOfLines.jl` source code to see where the uniform grid constraints are currently hardcoded
+Next up: Diving deeper into the `MethodOfLines.jl` source code to see where 
+the uniform grid constraints are currently hardcoded
