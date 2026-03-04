@@ -70,7 +70,7 @@ learning-sciML-pde/
 
 ---
 
-## Weekly Progress
+## Progress
 
 This repository is updated continuously as I:
 
