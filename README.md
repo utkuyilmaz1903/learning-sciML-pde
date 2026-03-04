@@ -106,5 +106,11 @@ Finite Difference implementation of the 1D Heat Equation to understand PDE discr
 Heat Equation solved using SciML's MethodOfLines.jl discretization pipeline.
 Comparison between manual finite differences and automated discretization.
 
+### Mini Project 3: Non-Uniform 1D Heat Equation (Proof of Concept)
+A custom implementation of the 1D Heat Equation using an Explicit Finite Difference Method on a **non-uniform grid**. 
+* Mapped a uniform spatial array into a clustered grid using a cubic function to focus on high-gradient areas.
+* Dynamically calculated local spatial steps (`h_left` and `h_right`) for the second derivative stencil.
+* Demonstrated the severe time-step penalty (microscopic `dt` requirement) caused by the explicit stability criterion on dense grids, highlighting the necessity of implicit solvers provided by `MethodOfLines.jl`.
+
 
 
