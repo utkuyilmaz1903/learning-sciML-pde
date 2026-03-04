@@ -1,0 +1,39 @@
+# The Reality of Non-Uniform Grids
+
+After understanding the basics of uniform FDM and how SciML tools automate 
+it, I decided to build a "Proof of Concept" for my actual GSoC goal: 
+solving the 1D Heat Equation on a non-uniform grid from scratch.
+
+## 1. Bending Space (Grid Mapping)
+I couldn't just hardcode 50 random coordinates. Instead, I created a 
+uniform mathematical scaffold (`xi` from -1.0 to 1.0) and mapped it to my 
+physical 1.0m rod using a cubic function: `x = 0.5 .+ 0.5 .* (xi .^ 3)`. 
+This beautifully clustered the points right at the center (x = 0.5) where 
+the temperature gradient is steepest, while leaving the boundaries sparse.
+
+## 2. The Custom Stencil
+The uniform `1/dx^2` multiplier was completely useless now. I had to 
+rewrite the inner spatial loop so that every single node dynamically 
+measures its exact distance to its left neighbor (`h_left`) and right 
+neighbor (`h_right`). The second derivative (u_xx) became a bespoke 
+calculation for every single point.
+
+## 3. The "Silent Trap" (Extreme Instability)
+When I ran the code, the plot disappeared! It turns out, by clustering 
+points so tightly at the center, the local `dx` dropped to microscopic 
+levels (around 0.0005). Because of the stability criterion 
+(α * dt / dx^2 <= 0.5), this tiny `dx` caused the multiplier to skyrocket, 
+blowing up the simulation instantly. 
+
+To fix it, I had to crush my time step (`dt`) down to `10^-7` and run 
+150,000 iterations just to simulate a tiny fraction of time.
+
+**The Big Takeaway:** This experiment proved exactly *why* my GSoC project is needed. Running 
+explicit FDM on non-uniform grids is a computational nightmare because the 
+smallest `dx` dictates the global `dt`. By implementing this into 
+`MethodOfLines.jl`, we can leverage the robust implicit solvers in 
+`DifferentialEquations.jl` to handle these clustered grids efficiently 
+without the microscopic time-step penalty.
+
+Next up: Diving into the `MethodOfLines.jl` source code to hunt down 
+the hardcoded uniform grid constraints!
