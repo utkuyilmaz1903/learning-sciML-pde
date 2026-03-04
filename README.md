@@ -61,11 +61,9 @@ The main goals of this repository are:
 ```
 learning-sciML-pde/
 │
-├── notes/            # Concept explanations and summaries
-├── experiments/      # Numerical experiments
 ├── mini-projects/    # Small PDE implementations
-├── source-study/     # Internal library exploration
-└── progress/  # Learning log
+├── myNotes
+└── source-study/     # Internal library exploration
 ```
 
 ---
