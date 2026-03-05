@@ -1,0 +1,30 @@
+## 🔍 Source Code Study: Uncovering the Non-Uniform Grid Bottleneck
+
+To prepare for my GSoC project, I conducted a deep dive into the
+`SciML/MethodOfLines.jl` source code to understand why non-uniform grids
+currently fail, despite the math being theoretically possible. Here is what I
+found:
+
+* **1. API Readiness (`src/MOLFiniteDifference.jl`):** The API is already
+  visionary. The `MOLFiniteDifference` struct accepts an `AbstractVector` for
+  `dxs`. This means the front-end is fully prepared to receive custom,
+  non-uniform grid arrays (like `[0.0, 0.05, 0.08, ... 1.0]`).
+* **2. The Mathematical Engine (`src/fornberg.jl`):** The underlying
+  `calculate_weights` function implements the Fornberg algorithm. I verified
+  that it natively supports calculating finite difference weights over
+  **arbitrary points**. The math engine is flawless and ready for
+  non-uniformity.
+* **3. The Architectural Bottleneck (`src/discretization/differential_discretizer.jl`):**
+  The core issue lies in the `DifferentialDiscretizer` struct. It maps
+  derivatives using `interpmap::Dict{Num, DerivativeOperator}`. Currently, the
+  discretization pipeline generates a **single, uniform** `DerivativeOperator`
+  (assuming constant `dx`) and applies it across the entire domain via
+  `generate_finite_difference_rules`. It fails to utilize Fornberg's
+  node-by-node dynamic weight capabilities.
+
+**🎯 My GSoC Objective:**
+Bridge the gap between the ready API and the Fornberg engine. I will modify
+the discretization pipeline so that when an `AbstractVector` is passed, it
+triggers a new branch that dynamically calculates local weights for every
+single node i and assembles them into a robust Sparse Matrix, avoiding the
+uniform `DerivativeOperator` trap.
