@@ -43,5 +43,3 @@ the exact same density as the highly active center. Implementing non-uniform
 grids will allow us to place dense points where the solution changes rapidly 
 and sparse points elsewhere, saving massive computational power. 
 
-Next up: Diving deeper into the `MethodOfLines.jl` source code to see where 
-the uniform grid constraints are currently hardcoded
