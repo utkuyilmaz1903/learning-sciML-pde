@@ -110,5 +110,11 @@ A custom implementation of the 1D Heat Equation using an Explicit Finite Differe
 * Dynamically calculated local spatial steps (`h_left` and `h_right`) for the second derivative stencil.
 * Demonstrated the severe time-step penalty (microscopic `dt` requirement) caused by the explicit stability criterion on dense grids, highlighting the necessity of implicit solvers provided by `MethodOfLines.jl`.
 
+### Mini Project 4: Non-Uniform Grid Advection-Diffusion Model
+This project demonstrates the implementation of a microscopic gradient dynamics model (Advection-Diffusion PDE) utilizing a **non-uniform vector grid**. 
+
+* **Key Feature:** Discretization is performed using `MOLFiniteDifference` with an explicit `UpwindScheme` on an `AbstractVector` grid. 
+* **Open Source Contribution:** During the development of this model, a `BoundsError` bug in the core `MethodOfLines.jl` library regarding vector grid offsets was identified and successfully patched. You can review the fix here: [SciML/MethodOfLines.jl#533](https://github.com/SciML/MethodOfLines.jl/pull/533).
+
 
 
