@@ -1,0 +1,39 @@
+*This document contains my personal notes, observations, and key takeaways while studying the internals of Partial Differential Equations (PDEs) and exploring the `MethodOfLines.jl` codebase. Documenting these steps helps me solidify my understanding of the underlying mathematics and the library's architecture.*
+
+---
+
+## 1. Symbolic Variable Validation and Parsing
+**(Ref: Issue #475)**
+
+**Context:**
+* Investigating an infinite loop behavior in `transform_pde_system!`.
+* This bug occurred when undefined variables were provided to the system.
+
+**Architectural Observation:**
+* While tracing the variable parsing logic, I had the opportunity to learn how `SymbolicUtils` handles expressions.
+* I noticed that using the `in` operator in a boolean context during symbolic evaluation can sometimes trigger a `TypeError`.
+
+**Key Takeaway:**
+* A safer approach for verifying symbolic variables is utilizing `isequal` instead of `in`.
+* Additionally, it was an insightful detail to see that `Differential` operators (`isa Differential`) need to be explicitly bypassed during term validation to prevent false positives.
+* This experience really helped me understand the symbolic parsing pipeline better.
+
+---
+
+## 2. Boundary Checks in Non-Uniform Grids
+**(Ref: Issue #340 / PR #533)**
+
+**Context:**
+* Trying to understand why supplying a non-uniform grid (as an `AbstractVector`) to `MOLFiniteDifference` using the `UpwindScheme` resulted in a `BoundsError`.
+* The error was specifically attempting to access index `0` at the boundaries.
+
+**Architectural Observation:**
+* By carefully examining the `_upwind_difference` function dispatched for `DX <: AbstractVector`, I realized that the `D.offside` parameter defaults to `0`.
+* Since the boundary detection relied on the condition `(II[j] <= D.offside)`, checking the lower boundary (`II[j] == 1`) always evaluated to `false` (since `1 <= 0` is false).
+* This caused the algorithm to miss the boundary entirely and apply the interior stencil logic, leading to the out-of-bounds error. 
+
+
+**Key Takeaway:**
+* It was a great learning experience to see how sensitive finite difference schemes are to index offsetting.
+* Instead of relying on the default `D.offside` value, calculating a dynamic offset based on the actual stencil length (`actual_offside = D.stencil_length - 1`) provided a much more reliable boundary check.
+* Fixing this helped me grasp the mechanics of boundary conditions in non-uniform discretizations.
