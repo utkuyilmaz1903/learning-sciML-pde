@@ -62,6 +62,7 @@ The main goals of this repository are:
 learning-sciML-pde/
 │
 ├── mini-projects/    # Small PDE implementations
+├── benchmarks/       # Performance and allocation tests
 ├── myNotes
 └── source-study/     # Internal library exploration
 ```
