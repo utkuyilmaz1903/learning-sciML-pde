@@ -1,0 +1,19 @@
+Example run of prototype.jl
+
+Grid:
+x = [0.0, 0.1, 0.25, 0.6]
+
+Evaluation point:
+x0 = 0.1
+
+Computed first derivative weights:
+
+[-5.0, 1.3333333333333335, 3.80952380952381, -0.14285714285714285]
+
+Interpretation:
+
+f'(0.1) ≈
+-5.0 * f(0.0)
++1.3333 * f(0.1)
++3.8095 * f(0.25)
+-0.1428 * f(0.6)
