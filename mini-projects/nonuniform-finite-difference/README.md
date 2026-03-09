@@ -31,6 +31,18 @@ Using the Fornberg algorithm we compute weights for derivative approximation.
 
 Supporting non-uniform grids is important for:
 
+## Example Output
+
+Running the prototype produces:
+
+
+Finite difference weights:
+[-5.0, 1.3333333333333335, 3.80952380952381, -0.14285714285714285]
+
+
+These weights approximate the first derivative at `x = 0.1`
+using the surrounding non-uniform stencil.
+
 - adaptive meshes
 - boundary layer resolution
 - stretched coordinate systems
