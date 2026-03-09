@@ -117,5 +117,15 @@ This project demonstrates the implementation of a microscopic gradient dynamics 
 * **Key Feature:** Discretization is performed using `MOLFiniteDifference` with an explicit `UpwindScheme` on an `AbstractVector` grid. 
 * **Open Source Contribution:** During the development of this model, a `BoundsError` bug in the core `MethodOfLines.jl` library regarding vector grid offsets was identified and successfully patched. You can review the fix here: [SciML/MethodOfLines.jl#533](https://github.com/SciML/MethodOfLines.jl/pull/533).
 
+### Mini Project 5: Fornberg Algorithm Benchmarking
+Performance testing of the Fornberg algorithm for dynamic finite difference weight generation on non-uniform grids.
+* Utilized `BenchmarkTools.jl` to profile execution time and memory allocations.
+* **Result:** Proved that node-by-node dynamic weight calculation has **zero performance overhead** and **zero extra memory allocation** compared to uniform grids, clearing the path for `MethodOfLines.jl` integration.
+
+### Mini Project 6: WENO Scheme Math on Non-Uniform Grids
+Theoretical analysis and code prototyping of WENO smoothness indicators ($\beta_k$) for clustered grids.
+* Demonstrated why classic hardcoded fractional weights (like 13/12 or 1/4) cause bounds errors and fail on non-uniform domains.
+* Prototyped the mathematical necessity of dynamically calculating indicators based on local geometric distances ($h_k$) to prepare for full Lagrange interpolation in the GSoC project.
+
 
 
