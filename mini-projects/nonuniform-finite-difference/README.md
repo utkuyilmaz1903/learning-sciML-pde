@@ -43,6 +43,12 @@ Finite difference weights:
 These weights approximate the first derivative at `x = 0.1`
 using the surrounding non-uniform stencil.
 
+## Error Comparison
+
+Derivative approximation error for uniform vs non-uniform grids.
+
+![error comparison](error_comparison.png)
+
 - adaptive meshes
 - boundary layer resolution
 - stretched coordinate systems
