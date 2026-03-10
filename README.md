@@ -128,5 +128,10 @@ Theoretical analysis and code prototyping of WENO smoothness indicators ($\beta_
 * Demonstrated why classic hardcoded fractional weights (like 13/12 or 1/4) cause bounds errors and fail on non-uniform domains.
 * Prototyped the mathematical necessity of dynamically calculating indicators based on local geometric distances ($h_k$) to prepare for full Lagrange interpolation in the GSoC project.
 
+### Mini Project 7: 2D Non-Uniform Heat Equation
+Extended the non-uniform grid logic to multi-dimensional PDEs to explore spatial stability.
+* Implemented the 2D Heat Equation from scratch using a clustered cubic grid on both the X and Y axes.
+* Dynamically calculated 2D Laplacian stencils ($u_{xx} + u_{yy}$) for variable geometric distances.
+* Demonstrated the severe time-step constraints (microscopic `dt`) in explicit 2D schemes on clustered grids, further emphasizing the need for robust implicit solvers in `MethodOfLines.jl`.
 
 
