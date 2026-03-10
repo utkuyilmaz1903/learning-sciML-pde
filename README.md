@@ -61,10 +61,11 @@ The main goals of this repository are:
 ```
 learning-sciML-pde/
 │
-├── mini-projects/    # Small PDE implementations
-├── benchmarks/       # Performance and allocation tests
+├── mini-projects/        # Small PDE implementations
+├── WENO-NonUniform-Math  # WENO prototype functions for uniform and non-uniform grids
+├── benchmarks/           # Performance and allocation tests
 ├── myNotes
-└── source-study/     # Internal library exploration
+└── source-study/         # Internal library exploration
 ```
 
 ---
