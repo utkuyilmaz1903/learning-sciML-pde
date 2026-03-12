@@ -99,6 +99,8 @@ To contribute production-quality improvements to PDE discretization tooling in S
 
 Active learning and preparation in progress.
 
+---
+
 ### Mini Project 1
 Finite Difference implementation of the 1D Heat Equation to understand PDE discretization fundamentals.
 
