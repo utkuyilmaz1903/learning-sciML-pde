@@ -15,7 +15,7 @@ within the SciML organization.
 I am a Computer Engineering student with strong foundations in:
 
 - Differential Equations (AA)
-- Linear Algebra (AA)
+- Linear Algebra
 - Calculus and numerical reasoning
 
 While exploring the SciML ecosystem, I encountered and resolved an installation-related issue and successfully contributed a merged pull request to the project. https://github.com/SciML/SciMLBase.jl/pull/1258 This experience motivated me to deeply understand the numerical and architectural foundations behind SciML's PDE tooling.
@@ -136,4 +136,8 @@ Extended the non-uniform grid logic to multi-dimensional PDEs to explore spatial
 * Dynamically calculated 2D Laplacian stencils ($u_{xx} + u_{yy}$) for variable geometric distances.
 * Demonstrated the severe time-step constraints (microscopic `dt`) in explicit 2D schemes on clustered grids, further emphasizing the need for robust implicit solvers in `MethodOfLines.jl`.
 
-
+### Mini Project 8: Finite Volume Method (FVM) Geometry on Non-Uniform Grids
+Prototyped the geometric foundations required for Finite Volume Method (FVM) mass conservation on clustered grids. This is a direct prerequisite for solving complex, multi-domain industrial problems like the **DFN Lithium-Ion Battery Model**.
+* Generated a staggered grid architecture, dynamically calculating Cell Centers (Nodes) and Cell Faces (Interfaces) for a cubic clustered vector.
+* Computed local Cell Volumes ($\Delta V$) and verified strict mass conservation (the sum of variable cell volumes perfectly equals the total domain length).
+* **Result:** Successfully laid the geometric groundwork needed to extend `MethodOfLines.jl`'s codegen to support FVM on variable spacing.
